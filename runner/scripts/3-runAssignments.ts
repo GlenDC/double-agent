@@ -23,6 +23,7 @@ const TYPE = 'external';
     console.log('AGENT: ', await agent.meta);
     await runAssignmentInSecretAgent(agent as any, assignment);
     await agent.close();
+    process.exit();
   };
   const userAgentsToTestPath = Path.join(__dirname, `../data/${TYPE}/2-user-agents-to-test/userAgentsToTest`);
 
