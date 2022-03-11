@@ -1,7 +1,6 @@
 {
   "name": "@double-agent/runner",
   "version": "1.0.0",
-  "private": true,
   "dependencies": {
     "@double-agent/analyze": "1.0.0",
     "@double-agent/collect": "1.0.0",
