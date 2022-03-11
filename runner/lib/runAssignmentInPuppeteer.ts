@@ -7,6 +7,10 @@ import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 class PuppeteerRunnerFactory implements IRunnerFactory {
   browser?: puppeteer.Browser;
 
+  public runnerId(): string {
+      return 'puppeteer';
+  }
+
   public async startFactory() {
     this.browser = await puppeteer.launch({
       headless: true,

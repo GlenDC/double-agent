@@ -6,6 +6,10 @@ import RealUserAgents from '@double-agent/real-user-agents';
 import ISessionPage from '@double-hero/collect/interfaces/ISessionPage';
 
 class HeroRunnerFactory implements IRunnerFactory {
+  public runnerId(): string {
+      return 'hero';
+  }
+
   public async startFactory() {
     await Core.start();
   }

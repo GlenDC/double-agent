@@ -15,6 +15,10 @@ class SecretAgentRunnerFactory implements IRunnerFactory {
     };
   }
 
+  public runnerId(): string {
+      return 'secret-agent';
+  }
+
   public async startFactory() {
     Core.onShutdown = () => process.exit();
     await Core.start({ coreServerPort: this.connectionServerPort });
