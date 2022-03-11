@@ -1,6 +1,6 @@
 import * as Path from 'path';
 
-import { CollectFoundationalProfilesOptions, importSlabProfiles } from '../lib/collectFoundationalProfiles'
+import { CollectFoundationalProfilesOptions, importSlabProfiles } from '@double-agent/runner/lib/collectFoundationalProfiles';
 
 import externalUserAgentConfig from '../data/external/userAgentConfig.json';
 

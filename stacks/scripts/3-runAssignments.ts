@@ -3,8 +3,8 @@ import * as Path from 'path';
 import { program } from 'commander';
 import { exit } from 'process';
 
-import { runAssignments } from '@double-agent/runners/lib/runAssignments'
-import { IRunnerFactory, IRunner } from '@double-agent/runners/interfaces/runner';
+import { runAssignments } from '@double-agent/runner/lib/runAssignments'
+import { IRunnerFactory } from '@double-agent/runner/interfaces/runner';
 
 import { HeroRunnerFactory } from '../lib/runAssignmentInHero';
 import { SecretAgentRunnerFactory } from '../lib/runAssignmentInSecretAgent';

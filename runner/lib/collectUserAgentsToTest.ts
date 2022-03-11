@@ -69,5 +69,4 @@ async function exists(path: string): Promise<boolean> {
 export {
     writeUserAgentsToTest,
     collectUserAgentsToTest,
-    UserAgentConfig,
 };

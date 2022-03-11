@@ -1,6 +1,6 @@
 import * as Path from "path";
 
-import { analyzeAssignmentResults } from '../lib/analyzeAssignmentResults';
+import { analyzeAssignmentResults } from '@double-agent/runner/lib/analyzeAssignmentResults';
 
 const probesDataDir = Path.resolve(__dirname, `../data/external/1-foundational-probes`);
 const assignmentsDataDir = Path.resolve(__dirname, `../data/external/3-assignments`);
