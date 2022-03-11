@@ -1,11 +1,14 @@
 import * as Path from 'path';
+
+import { program } from 'commander';
+import { exit } from 'process';
+
+import { runAssignments } from '@double-agent/runners/lib/runAssignments'
+import { IRunnerFactory, IRunner } from '@double-agent/runners/interfaces/runner';
+
 import { HeroRunnerFactory } from '../lib/runAssignmentInHero';
 import { SecretAgentRunnerFactory } from '../lib/runAssignmentInSecretAgent';
 import { PuppeteerRunnerFactory } from '../lib/runAssignmentInPuppeteer';
-import { runAssignments } from '../lib/runAssignments'
-import { IRunnerFactory, IRunner } from '../interfaces/runner';
-import { program } from 'commander';
-import { exit } from 'process';
 
 // RunnerID groups together all supported runner implementations.
 enum RunnerID {

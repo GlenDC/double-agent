@@ -1,8 +1,9 @@
-import { Agent } from 'secret-agent';
-import Core from '@secret-agent/core';
-import { IRunnerFactory, IRunner } from '../interfaces/runner';
+import { IRunnerFactory, IRunner } from '@double-agent/runners/interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
+
+import { Agent } from 'secret-agent';
+import Core from '@secret-agent/core';
 
 class SecretAgentRunnerFactory implements IRunnerFactory {
   connectionServerPort: number;

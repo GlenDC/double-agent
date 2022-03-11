@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
-import puppeteer from 'puppeteer';
-import { IRunner, IRunnerFactory } from '../interfaces/runner';
+import { IRunner, IRunnerFactory } from '@double-agent/runners/interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
+
+import puppeteer from 'puppeteer';
 
 class PuppeteerRunnerFactory implements IRunnerFactory {
   browser?: puppeteer.Browser;
