@@ -6,25 +6,25 @@ import IUserAgentToTest, { UserAgentToTestPickType } from "@double-agent/config/
 
 import { UserAgentConfig } from '../interfaces/userAgent';
 
+const FsPromises = Fs.promises;
+
 async function writeUserAgentsToTest(probeTcpFilePath: string, userAgentConfig: UserAgentConfig, outFilePath: string) {
     const userAgentsToTest = await collectUserAgentsToTest(probeTcpFilePath, userAgentConfig);
 
     const outDir = Path.dirname(outFilePath);
-    if (!(await Fs.exists(outDir))) {
-        await Fs.mkdir(outDir);
-    }
+    await FsPromises.mkdir(outDir, { recursive: true });
 
-    await Fs.writeFile(outFilePath, JSON.stringify(userAgentsToTest, null, 2));
+    await FsPromises.writeFile(outFilePath, JSON.stringify(userAgentsToTest, null, 2));
 }
 
 async function collectUserAgentsToTest(probeTcpFilePath: string, userAgentConfig: UserAgentConfig): Promise<IUserAgentToTest[]> {
     const userAgentsToTest: IUserAgentToTest[] = [];
 
-    if (!(await Fs.exists(probeTcpFilePath))) {
+    if (!(await exists(probeTcpFilePath))) {
         return userAgentsToTest;
     }
 
-    const tcpProbeBuckets = JSON.parse(await Fs.readFile(probeTcpFilePath, 'utf8'));
+    const tcpProbeBuckets = JSON.parse(await FsPromises.readFile(probeTcpFilePath, 'utf8'));
     const userAgentIds: Set<string> = new Set();
     tcpProbeBuckets.forEach(probeBucket => {
         probeBucket.userAgentIds.forEach(userAgentId => userAgentIds.add(userAgentId));
@@ -55,6 +55,15 @@ async function collectUserAgentsToTest(probeTcpFilePath: string, userAgentConfig
     }
 
     return userAgentsToTest;
+}
+
+async function exists(path: string): Promise<boolean> {
+    try {
+        await FsPromises.access(path);
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 export {

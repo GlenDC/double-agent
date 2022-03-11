@@ -5,6 +5,8 @@ import RealUserAgents from "@double-agent/real-user-agents";
 
 import { UserAgentConfig } from '../interfaces/userAgent';
 
+const FsPromises = Fs.promises;
+
 interface CollectFoundationalProfilesOptions {
     slabDataDir?: string;
 }
@@ -20,7 +22,7 @@ async function importSlabProfiles(profilesDir: string, userAgentConfig: UserAgen
     }
     const slabProfilesDir = Path.join(slabDataDir, 'profiles');
 
-    for (const userAgentId of await Fs.readdir(slabProfilesDir)) {
+    for (const userAgentId of await FsPromises.readdir(slabProfilesDir)) {
         if (!userAgentConfig.browserIds.some(x => userAgentId.includes(x))) {
             continue;
         }
@@ -37,13 +39,11 @@ async function importSlabProfiles(profilesDir: string, userAgentConfig: UserAgen
 }
 
 async function copyDir(fromDir: string, toDir: string) {
-    const fileNamesToCopy = await Fs.readdir(fromDir);
-    if (!(await Fs.exists(toDir))) {
-        await Fs.mkdir(toDir, { recursive: true });
-    }
+    const fileNamesToCopy = await FsPromises.readdir(fromDir);
+    await FsPromises.mkdir(toDir, { recursive: true });
 
     for (const fileNameToCopy of fileNamesToCopy) {
-        await Fs.copyFile(`${fromDir}/${fileNameToCopy}`, `${toDir}/${fileNameToCopy}`);
+        await FsPromises.copyFile(`${fromDir}/${fileNameToCopy}`, `${toDir}/${fileNameToCopy}`);
     }
 }
 

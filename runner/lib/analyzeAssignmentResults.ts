@@ -3,15 +3,17 @@ import * as Path from "path";
 
 import Analyze from '@double-agent/analyze';
 import { IResultFlag } from '@double-agent/analyze/lib/Plugin';
-import { UserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
-import { createOverTimeSessionKey } from '@double-agent/collect-controller/lib/buildAllAssignments';
+// import { UserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
+// import { createOverTimeSessionKey } from '@double-agent/collect-controller/lib/buildAllAssignments';
+
+const FsPromises = Fs.promises;
 
 async function analyzeAssignmentResults(
     probesDataDir: string,
     assignmentsDataDir: string,
     resultsDir: string,
 ) {
-    const userAgentIds = await Fs.readdir(`${assignmentsDataDir}/individual`);
+    const userAgentIds = await FsPromises.readdir(`${assignmentsDataDir}/individual`);
     const analyze = new Analyze(userAgentIds.length, probesDataDir);
 
     for (const userAgentId of userAgentIds) {
@@ -20,23 +22,22 @@ async function analyzeAssignmentResults(
         await saveFlagsToPluginFiles(saveFlagsToDir, flags);
     }
 
-
-    for (const pickType of [UserAgentToTestPickType.popular, UserAgentToTestPickType.random]) {
-        const sessionsDir = Path.resolve(assignmentsDataDir, `overtime-${pickType}`);
-        const userAgentIdFlagsMapping = analyze.addOverTime(sessionsDir, pickType);
-        let i = 0;
-        for (const userAgentId in Object.keys(userAgentIdFlagsMapping)) {
-            const flags = userAgentIdFlagsMapping[userAgentId];
-            const sessionKey = createOverTimeSessionKey(pickType, i, userAgentId);
-            const flagsDir = Path.resolve(sessionsDir, sessionKey, `flags`);
-            await saveFlagsToPluginFiles(flagsDir, flags);
-            i++;
-        }
-    }
+    // for (const pickType of [UserAgentToTestPickType.popular, UserAgentToTestPickType.random]) {
+    //     const sessionsDir = Path.resolve(assignmentsDataDir, `overtime-${pickType}`);
+    //     const userAgentIdFlagsMapping = analyze.addOverTime(sessionsDir, pickType);
+    //     let i = 0;
+    //     for (const userAgentId in Object.keys(userAgentIdFlagsMapping)) {
+    //         const flags = userAgentIdFlagsMapping[userAgentId];
+    //         const sessionKey = createOverTimeSessionKey(pickType, i, userAgentId);
+    //         const flagsDir = Path.resolve(sessionsDir, sessionKey, `flags`);
+    //         await saveFlagsToPluginFiles(flagsDir, [flags]);
+    //         i++;
+    //     }
+    // }
 
     const testResults = analyze.generateTestResults();
     const testResultsPath = Path.resolve(resultsDir, `testResults.json`);
-    await Fs.writeFile(testResultsPath, JSON.stringify(testResults, null, 2));
+    await FsPromises.writeFile(testResultsPath, JSON.stringify(testResults, null, 2));
 }
 
 async function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]) {
@@ -45,17 +46,14 @@ async function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]) {
         flagsByPluginId[flag.pluginId] = flagsByPluginId[flag.pluginId] || [];
         flagsByPluginId[flag.pluginId].push(flag);
     });
-    if (await Fs.exists(saveToDir)) {
-        await Fs.rmdir(saveToDir, { recursive: true });
-    }
-    await Fs.mkdir(saveToDir, { recursive: true });
+    await FsPromises.mkdir(saveToDir, { recursive: true });
 
     for (const pluginId of Object.keys(flagsByPluginId)) {
         const filePath = Path.resolve(saveToDir, `${pluginId}.json`);
-        await Fs.writeFile(filePath, JSON.stringify(flagsByPluginId[pluginId], null, 2));
+        await FsPromises.writeFile(filePath, JSON.stringify(flagsByPluginId[pluginId], null, 2));
 
         const signaturesFilePath = Path.resolve(saveToDir, `${pluginId}-signatures.json`);
-        await Fs.writeFile(signaturesFilePath, JSON.stringify(flagsByPluginId[pluginId].map(x => x.checkSignature), null, 2));
+        await FsPromises.writeFile(signaturesFilePath, JSON.stringify(flagsByPluginId[pluginId].map(x => x.checkSignature), null, 2));
     }
 }
 
