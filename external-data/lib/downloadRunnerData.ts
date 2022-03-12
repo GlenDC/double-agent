@@ -31,7 +31,7 @@ async function downloadRunnerData(probesOutputDir: string, options?: DownloadOpt
     });
 
     const tmpDirPath = `${Os.tmpdir()}/ulixee/double-agent`;
-    const gzFileName = 'foundational-probes.tar.gz';
+    const gzFileName = '1-foundational-probes.tar.gz';
     const asset = data.assets.find(x => x.name === gzFileName);
     const downloadUrl = asset.browser_download_url;
     const downloadFilePath = `${tmpDirPath}/${gzFileName}`;
@@ -72,7 +72,7 @@ async function downloadRunnerData(probesOutputDir: string, options?: DownloadOpt
             .on('finish', resolve);
     });
 
-    FsPromises.rmdir(tmpDirPath, { recursive: true });
+    await FsPromises.rm(tmpDirPath, { recursive: true });
 }
 
 export {

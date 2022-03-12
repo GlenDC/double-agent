@@ -14,7 +14,7 @@ async function writeUserAgentsToTest(probeTcpFilePath: string, userAgentConfig: 
     const outDir = Path.dirname(outFilePath);
     await FsPromises.mkdir(outDir, { recursive: true });
 
-    await FsPromises.writeFile(outFilePath, JSON.stringify(userAgentsToTest, null, 2));
+    await FsPromises.writeFile(`${outFilePath}.json`, JSON.stringify(userAgentsToTest, null, 2));
 }
 
 async function collectUserAgentsToTest(probeTcpFilePath: string, userAgentConfig: UserAgentConfig): Promise<IUserAgentToTest[]> {
