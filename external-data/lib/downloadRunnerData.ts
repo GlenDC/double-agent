@@ -15,11 +15,11 @@ interface DownloadOptions {
 async function downloadRunnerData(probesOutputDir: string, options?: DownloadOptions) {
     if (!options) {
         options = {
-            version: "v1.0.1",
+            version: "1.0.1",
         };
     } else {
         if (!options.version) {
-            options.version = "v1.0.1";
+            options.version = "1.0.1";
         }
     }
 
