@@ -6,7 +6,7 @@ import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 import Hero from '@ulixee/hero-fullstack';
 import Core from '@ulixee/hero-core';
 
-class HeroRunnerFactory implements IRunnerFactory {
+export default class HeroRunnerFactory implements IRunnerFactory {
   public runnerId(): string {
       return 'hero';
   }
@@ -105,5 +105,3 @@ class HeroRunner implements IRunner {
     await this.hero.close();
   }
 }
-
-export { HeroRunnerFactory };

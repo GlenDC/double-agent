@@ -4,7 +4,7 @@ import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
 import puppeteer from 'puppeteer';
 
-class PuppeteerRunnerFactory implements IRunnerFactory {
+export default class PuppeteerRunnerFactory implements IRunnerFactory {
   browser?: puppeteer.Browser;
 
   public runnerId(): string {
@@ -106,5 +106,3 @@ class PuppeteerRunner implements IRunner {
     await this.page.close();
   }
 }
-
-export { PuppeteerRunnerFactory };

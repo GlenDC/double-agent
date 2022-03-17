@@ -5,7 +5,7 @@ import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 import { Agent } from 'secret-agent';
 import Core from '@secret-agent/core';
 
-class SecretAgentRunnerFactory implements IRunnerFactory {
+export default class SecretAgentRunnerFactory implements IRunnerFactory {
   connectionServerPort: number;
   connectionToCore: { host: string };
 
@@ -112,5 +112,3 @@ class SecretAgentRunner implements IRunner {
     await this.agent.close();
   }
 }
-
-export { SecretAgentRunnerFactory };
